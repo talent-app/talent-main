@@ -1,0 +1,6 @@
+[submodule "talent-api-rails"]
+	path = talent-api-rails
+	url = git@github.com:talent-app/talent-api-rails.git
+[submodule "talent-ui-react"]
+	path = talent-ui-react
+	url = git@github.com:talent-app/talent-ui-react.git
