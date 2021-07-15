@@ -1,0 +1,42 @@
+version: '3.6'
+
+services:
+  talent-api-rails:
+    build: ./talent-api-rails/
+    image: talent-api-rails:latest
+    volumes:
+      - ./talent-api-rails:/talent-api-rails
+    working_dir: /talent-api-rails
+    ports:
+      - "8001:8001"
+    command: puma -p 8001
+    depends_on:
+      - talent-postgres
+    environment:
+      - DATABASE_URL=postgres://postgres@talent-postgres
+      - TALENT_UI_TALENT_API_KEY
+      - DEVISE_JWT_SECRET_KEY=${TALENT_API_DEVISE_JWT_SECRET_KEY}
+
+  talent-ui-react:
+    build:
+      context: ./talent-ui-react/
+      dockerfile: Dockerfile.dev
+    image: talent-ui-react:latest
+    environment:
+      - REACT_APP_TALENT_API_KEY=${TALENT_UI_TALENT_API_KEY}
+    working_dir: /talent-ui-react
+    volumes:
+        #- ./talent-ui-react:/talent-ui-react
+      - ./talent-ui-react/src:/talent-ui-react/src
+      - ./talent-ui-react/public:/talent-ui-react/public
+      - ./talent-ui-react/build:/talent-ui-react/build
+      - ./talent-ui-react/package.json:/talent-ui-react/package.json
+      - ./talent-ui-react/package-lock.json:/talent-ui-react/package-lock.json
+    command: npm start --verbose
+    ports:
+      - "3002:3000"
+    stdin_open: true
+
+  talent-postgres:
+    image: postgres:10.3-alpine
+
