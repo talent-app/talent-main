@@ -26,12 +26,11 @@ services:
       - REACT_APP_TALENT_API_KEY=${TALENT_UI_TALENT_API_KEY}
     working_dir: /talent-ui-react
     volumes:
-        #- ./talent-ui-react:/talent-ui-react
-      - ./talent-ui-react/src:/talent-ui-react/src
-      - ./talent-ui-react/public:/talent-ui-react/public
-      - ./talent-ui-react/build:/talent-ui-react/build
-      - ./talent-ui-react/package.json:/talent-ui-react/package.json
-      - ./talent-ui-react/package-lock.json:/talent-ui-react/package-lock.json
+      - ${PWD}/talent-ui-react/src:/talent-ui-react/src
+      - ${PWD}/talent-ui-react/public:/talent-ui-react/public
+      - ${PWD}/talent-ui-react/build:/talent-ui-react/build
+      - ${PWD}/talent-ui-react/package.json:/talent-ui-react/package.json
+      - ${PWD}/talent-ui-react/package-lock.json:/talent-ui-react/package-lock.json
     command: npm start --verbose
     ports:
       - "3002:3000"
